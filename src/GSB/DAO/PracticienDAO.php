@@ -4,7 +4,7 @@ namespace GSB\DAO;
 
 use GSB\Domain\Practicien;
 
-class Practicien extends DAO
+class PracticienDAO extends DAO
 {
     /**
      * Returns the list of all families, sorted by name.
@@ -50,8 +50,8 @@ class Practicien extends DAO
      */
     protected function buildDomainObject($row) {
         $practicien = new Practicien();
-        $practicien->setId($row['practicien_id']);
-        $practicien->setName($row['practicien_name']);
+        $practicien->setId($row['practitioner_id']);
+        $practicien->setName($row['practitioner_name']);
         return $practicien;
     }
 }

@@ -31,3 +31,13 @@ $app->post('/drugs/results/', function(Request $request) use ($app) {
     $drugs = $app['dao.drug']->findAllByFamily($familyId);
     return $app['twig']->render('drugs_results.html.twig', array('drugs' => $drugs));
 });
+// List of all practiciens
+$app->get('/practiciens/', function() use ($app) {
+    $practiciens = $app['dao.practiciens']->findAll();
+    return $app['twig']->render('practiciens.html.twig', array('practiciens' => $practiciens));
+});
+// Details for a practiciens
+$app->get('/practiciens/{id}', function($id) use ($app) {
+    $practicien = $app['dao.practicien']->find($id);
+    return $app['twig']->render('practiciens.html.twig', array('practiciens' => $practicien));
+});
