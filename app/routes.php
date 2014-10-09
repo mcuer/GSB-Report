@@ -31,16 +31,20 @@ $app->post('/drugs/results/', function(Request $request) use ($app) {
     $drugs = $app['dao.drug']->findAllByFamily($familyId);
     return $app['twig']->render('drugs_results.html.twig', array('drugs' => $drugs));
 });
-// List of all practiciens
-$app->get('/practiciens/', function() use ($app) {
-    $practiciens = $app['dao.practiciens']->findAll();
-    return $app['twig']->render('practiciens.html.twig', array('practiciens' => $practiciens));
+
+
+// list of all practitioner
+$app->get('/practitioners/', function() use ($app) {
+    $practitioners = $app['dao.practitioner']->findAll();
+    return $app['twig']->render('practitioners.html.twig', array('practitioners' => $practitioners));
 });
-// Details for a practiciens
-$app->get('/practiciens/{id}', function($id) use ($app) {
-    $practicien = $app['dao.practicien']->find($id);
-    return $app['twig']->render('practiciens.html.twig', array('practiciens' => $practicien));
+
+//Details for a practitioner 
+$app->get('/practitioners/{id}', function($id) use ($app) {
+    $practitioner = $app['dao.practitioner']->find($id);
+    return $app['twig']->render('practitioner.html.twig', array('practitioner' => $practitioner));
 });
+
 // Results page for practitioner
 $app->post('/practitioners/results/', function(Request $request) use ($app) {
     $typeId = $request->request->get('type');

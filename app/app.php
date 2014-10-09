@@ -21,6 +21,7 @@ $app['dao.drug'] = $app->share(function ($app) {
     $drugDAO->setFamilyDAO($app['dao.family']);
     return $drugDAO;
 });
+
 $app['dao.type'] = $app->share(function  ($app){
     return new GSB\DAO\PractitionerTypeDAO($app['db']);
 }); 
@@ -30,3 +31,4 @@ $app['dao.practitioner'] = $app->share(function ($app){
     $practitionerDAO->setPractitionerTypeDAO($app['dao.type']);
     return $practitionerDAO;
 }); 
+
