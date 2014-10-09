@@ -2,15 +2,28 @@
 
 namespace GSB\Domain;
 
-class PractitionerType
+class PractitionerType 
 {
-    
+    /**
+     * PractitionerType id.
+     *
+     * @var integer
+     */
     private $id;
-    private $code;
-    private $name;
-    private $place;
 
-    
+    /**
+     * Name.
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Place.
+     *
+     * @var string
+     */
+    private $place;
 
     public function getId() {
         return $this->id;
@@ -18,14 +31,6 @@ class PractitionerType
 
     public function setId($id) {
         $this->id = $id;
-    }
-    
-    public function getCode() {
-        return $this->code;
-    }
-
-    public function setCode($code) {
-        $this->code = $code;
     }
 
     public function getName() {
@@ -35,6 +40,7 @@ class PractitionerType
     public function setName($name) {
         $this->name = $name;
     }
+
     public function getPlace() {
         return $this->place;
     }

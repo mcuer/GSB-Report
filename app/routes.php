@@ -32,27 +32,36 @@ $app->post('/drugs/results/', function(Request $request) use ($app) {
     return $app['twig']->render('drugs_results.html.twig', array('drugs' => $drugs));
 });
 
-
-// list of all practitioner
-$app->get('/practitioners/', function() use ($app) {
-    $practitioners = $app['dao.practitioner']->findAll();
-    return $app['twig']->render('practitioners.html.twig', array('practitioners' => $practitioners));
-});
-
-//Details for a practitioner 
+// Details for a practitioner
 $app->get('/practitioners/{id}', function($id) use ($app) {
     $practitioner = $app['dao.practitioner']->find($id);
     return $app['twig']->render('practitioner.html.twig', array('practitioner' => $practitioner));
 });
 
-// Results page for practitioner
-$app->post('/practitioners/results/', function(Request $request) use ($app) {
-    $typeId = $request->request->get('type');
-    $practitioners = $app['dao.practitioner']->findAllByType($typeId);
-    return $app['twig']->render('practitioners_results.html.twig', array('practitioners' => $practitioners));
+// List of all practitioners
+$app->get('/practitioners/', function() use ($app) {
+    $practitioners = $app['dao.practitioner']->findAll();
+    return $app['twig']->render('practitioners.html.twig', array('practitioners' => $practitioners));
 });
 
+// Search form for practitioners
 $app->get('/practitioners/search/', function() use ($app) {
-    $types = $app['dao.type']->findAll();
+    $types = $app['dao.practitionertype']->findAll();
     return $app['twig']->render('practitioners_search.html.twig', array('types' => $types));
+});
+
+// Results page for practitioners
+$app->post('/practitioners/results/', function(Request $request) use ($app) {
+    if ($request->request->has('type')) {
+        // Simple search by type
+        $typeId = $request->request->get('type');
+        $practitioners = $app['dao.practitioner']->findAllByType($typeId);
+    }
+    else {
+        // Advanced search by name and city
+        $name = $request->request->get('name');
+        $city = $request->request->get('city');
+        $practitioners = $app['dao.practitioner']->findAllByNameAndCity($name, $city);
+    }
+    return $app['twig']->render('practitioners_results.html.twig', array('practitioners' => $practitioners));
 });
