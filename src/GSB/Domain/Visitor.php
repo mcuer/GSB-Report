@@ -1,8 +1,9 @@
 <?php
 
 namespace GSB\Domain;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class Visitor 
+class Visitor implements UserInterface
 {
     
     private $id;
@@ -11,19 +12,19 @@ class Visitor
 
     private $laboraty;
 
-    private $visitor_last;
+    private $visitorLast;
 
-    private $visitor_first;
+    private $visitorFirst;
 
-    private $visitor_addresse;
+    private $visitorAddresse;
 
-    private $visitor_zip_code;
+    private $visitorZipCode;
 
-    private $visitor_city;
+    private $visitorCity;
     
-    private $hiring_date;
+    private $hiringDate;
     
-    private $user_name;
+    private $userName;
     
     private $passeword;
     
@@ -31,64 +32,46 @@ class Visitor
     
     private $role;
     
-    private $visitor_type;
+    private $type;
 
     public function getId() {
         return $this->id;
-    }
-    public function setId($id) {
-        $this->id = $id;
     }
 
     public function getSector() {
         return $this->sector;
     }
 
-    public function setSector($sector) {
-        $this->sector = $sector;
-    }
-
     public function getLaboraty() {
         return $this->laboraty;
     }
 
-    public function setLaboraty($laboraty) {
-        $this->laboraty = $laboraty;
+    public function getVisitorLast() {
+        return $this->visitorLast;
     }
 
-    public function getlast() {
-        return $this->last;
+    public function getVisitorFirst() {
+        return $this->visitorFirst;
     }
 
-    public function setlast($first) {
-        $this->last = $first;
-    }
-    public function getfirst() {
-        return $this->first;
+    public function getVisitorAddresse() {
+        return $this->visitorAddresse;
     }
 
-    public function setfirst($first) {
-        $this->first = $first;
-    }
-    
-    public function getaddresse() {
-        return $this->visitor_addresse;
+    public function getVisitorZipCode() {
+        return $this->visitorZipCode;
     }
 
-    public function getzip_code() {
-        return $this->visitor_zip_code;
+    public function getVisitorCity() {
+        return $this->visitorCity;
     }
 
-    public function getcity() {
-        return $this->visitor_city;
+    public function getHiringDate() {
+        return $this->hiringDate;
     }
 
-    public function getHiring_date() {
-        return $this->hiring_date;
-    }
-
-    public function getUser_name() {
-        return $this->user_name;
+    public function getUserName() {
+        return $this->userName;
     }
 
     public function getPasseword() {
@@ -107,24 +90,44 @@ class Visitor
         return $this->type;
     }
 
-    public function setaddresse($addresse) {
-        $this->addresse = $addresse;
+    public function setId($id) {
+        $this->id = $id;
     }
 
-    public function setzip_code($zip_code) {
-        $this->zip_code = $zip_code;
+    public function setSector($sector) {
+        $this->sector = $sector;
     }
 
-    public function setcity($city) {
-        $this->city = $city;
+    public function setLaboraty($laboraty) {
+        $this->laboraty = $laboraty;
     }
 
-    public function setHiring_date($hiring_date) {
-        $this->date = $hiring_date;
+    public function setVisitorLast($visitorLast) {
+        $this->visitorLast = $visitorLast;
     }
 
-    public function setUser_name($user_name) {
-        $this->name = $user_name;
+    public function setVisitorFirst($visitorFirst) {
+        $this->visitorFirst = $visitorFirst;
+    }
+
+    public function setVisitorAddresse($visitorAddresse) {
+        $this->visitorAddresse = $visitorAddresse;
+    }
+
+    public function setVisitorZipCode($visitorZipCode) {
+        $this->visitorZipCode = $visitorZipCode;
+    }
+
+    public function setVisitorCity($visitorCity) {
+        $this->visitorCity = $visitorCity;
+    }
+
+    public function setHiringDate($hiringDate) {
+        $this->hiringDate = $hiringDate;
+    }
+
+    public function setUserName($userName) {
+        $this->userName = $userName;
     }
 
     public function setPasseword($passeword) {
@@ -142,6 +145,22 @@ class Visitor
     public function setType($type) {
         $this->type = $type;
     }
+     /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array($this->getRole());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials() {
+        // Nothing to do here
+    }
+
+
 
 
 }
