@@ -56,30 +56,30 @@ class Visitor
         $this->laboraty = $laboraty;
     }
 
-    public function getVisitor_last() {
-        return $this->visitor_last;
+    public function getlast() {
+        return $this->last;
     }
 
-    public function setVisitor_last($visitor_first) {
-        $this->visitor_last = $visitor_first;
+    public function setlast($first) {
+        $this->last = $first;
     }
-    public function getVisitor_first() {
-        return $this->visitor_first;
+    public function getfirst() {
+        return $this->first;
     }
 
-    public function setVisitor_first($visitor_first) {
-        $this->visitor_first = $visitor_first;
+    public function setfirst($first) {
+        $this->first = $first;
     }
     
-    public function getVisitor_addresse() {
+    public function getaddresse() {
         return $this->visitor_addresse;
     }
 
-    public function getVisitor_zip_code() {
+    public function getzip_code() {
         return $this->visitor_zip_code;
     }
 
-    public function getVisitor_city() {
+    public function getcity() {
         return $this->visitor_city;
     }
 
@@ -103,28 +103,28 @@ class Visitor
         return $this->role;
     }
 
-    public function getVisitor_type() {
-        return $this->visitor_type;
+    public function getType() {
+        return $this->type;
     }
 
-    public function setVisitor_addresse($visitor_addresse) {
-        $this->visitor_addresse = $visitor_addresse;
+    public function setaddresse($addresse) {
+        $this->addresse = $addresse;
     }
 
-    public function setVisitor_zip_code($visitor_zip_code) {
-        $this->visitor_zip_code = $visitor_zip_code;
+    public function setzip_code($zip_code) {
+        $this->zip_code = $zip_code;
     }
 
-    public function setVisitor_city($visitor_city) {
-        $this->visitor_city = $visitor_city;
+    public function setcity($city) {
+        $this->city = $city;
     }
 
     public function setHiring_date($hiring_date) {
-        $this->hiring_date = $hiring_date;
+        $this->date = $hiring_date;
     }
 
     public function setUser_name($user_name) {
-        $this->user_name = $user_name;
+        $this->name = $user_name;
     }
 
     public function setPasseword($passeword) {
@@ -139,8 +139,8 @@ class Visitor
         $this->role = $role;
     }
 
-    public function setVisitor_type($visitor_type) {
-        $this->visitor_type = $visitor_type;
+    public function setType($type) {
+        $this->type = $type;
     }
 
 
