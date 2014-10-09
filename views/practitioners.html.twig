@@ -11,12 +11,14 @@
             <thead>
                 <tr>
                     <th>Nom </th>
+                    <th>Prenom</th>
                     <th>Type</th>
                 </tr>
             </thead>
             {% for practitioner in practitioners %}
                 <tr>
-                    <td><a href="/practitioners/{{ practitioner.id }}">{{ practitioner.first_name ~" "~ practitioner.name }}</a></td>
+                    <td><a href="/practitioners/{{ practitioner.id }}">{{ practitioner.first_name}}</a></td>
+                    <td>{{practitioner.name}}</td>
                     <td>{{practitioner.typeID.name}}</td>                    
                 </tr>
             {% endfor %}
