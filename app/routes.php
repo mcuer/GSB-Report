@@ -41,3 +41,14 @@ $app->get('/practiciens/{id}', function($id) use ($app) {
     $practicien = $app['dao.practicien']->find($id);
     return $app['twig']->render('practiciens.html.twig', array('practiciens' => $practicien));
 });
+// Results page for practitioner
+$app->post('/practitioners/results/', function(Request $request) use ($app) {
+    $typeId = $request->request->get('type');
+    $practitioners = $app['dao.practitioner']->findAllByType($typeId);
+    return $app['twig']->render('practitioners_results.html.twig', array('practitioners' => $practitioners));
+});
+
+$app->get('/practitioners/search/', function() use ($app) {
+    $types = $app['dao.type']->findAll();
+    return $app['twig']->render('practitioners_search.html.twig', array('types' => $types));
+});
