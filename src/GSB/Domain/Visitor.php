@@ -160,7 +160,4 @@ class Visitor implements UserInterface
         // Nothing to do here
     }
 
-
-
-
 }

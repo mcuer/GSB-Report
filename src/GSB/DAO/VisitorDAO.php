@@ -45,7 +45,7 @@ class VisitorDAO extends DAO implements UserProviderInterface
     }
     public function loadUserByUsername($username)
     {
-        $sql = "select * from visitor where visitor_last_name=?";
+        $sql = "select * from visitor where user_name=?";
         $row = $this->getDb()->fetchAssoc($sql, array($username));
 
         if ($row)
@@ -67,7 +67,7 @@ class VisitorDAO extends DAO implements UserProviderInterface
     }
      public function supportsClass($class)
     {
-        return 'MicroCMS\Domain\User' === $class;
+        return 'GSB\Domain\Visitor' === $class;
     }
     /**
      * Creates a visitor instance from a DB query result row.
@@ -79,8 +79,6 @@ class VisitorDAO extends DAO implements UserProviderInterface
     protected function buildDomainObject($row) {
         $visitor = new visitor();
         $visitor->setId($row['visitor_id']);
-        $visitor->setSector($row['sector_id']);
-        $visitor->setLaboraty($row['laboratory_id']);
         $visitor->setVisitorLast($row['visitor_last_name']);
         $visitor->setVisitorFirst($row['visitor_first_name']);
         $visitor->setVisitorAddresse($row['visitor_address']);
