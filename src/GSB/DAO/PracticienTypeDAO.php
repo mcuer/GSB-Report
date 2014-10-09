@@ -49,7 +49,7 @@ class PracticienTypeDAO extends DAO
      * @return \GSB\Domain\Family
      */
     protected function buildDomainObject($row) {
-        $practicien_type = new Practicien_type();
+        $practicien_type = new PracticienType();
         $practicien_type->setId($row['practicien_type_id']);
         $practicien_type->setName($row['practicien_type_name']);
         return $practicien_type;

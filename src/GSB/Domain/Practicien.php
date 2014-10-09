@@ -47,7 +47,12 @@ class Practicien
      *
      * @var string
      */
-    
+    private $type;
+    /**
+     * Name.
+     *
+     * @var string
+     */
     public function getId() {
         return $this->id;
     }
@@ -98,5 +103,12 @@ class Practicien
 
     public function setNotoriety_coefficient($notoriety_coefficient) {
         $this->notoriety_coefficient = $notoriety_coefficient;
+    }
+    public function getType() {
+        return $this->type;
+    }
+
+    public function setType($type) {
+        $this->type = $type;
     }
 }

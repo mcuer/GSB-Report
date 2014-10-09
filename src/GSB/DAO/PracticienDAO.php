@@ -6,6 +6,11 @@ use GSB\Domain\Practicien;
 
 class PracticienDAO extends DAO
 {
+    private $PracticienTypeDAO;
+
+    public function setPracticienTypeDAO($practicienTypeDAO) {
+        $this->$practicienTypeDAO = $practicienTypeDAO;
+    }
     /**
      * Returns the list of all families, sorted by name.
      *
@@ -23,7 +28,25 @@ class PracticienDAO extends DAO
         }
         return $practitioner;
     }
-
+    /**
+     * Returns the list of all practitioners for a given type, sorted by trade name.
+     *
+     * @param integer $practitionersDd The type id.
+     *
+     * @return array The list of practitioners.
+     */
+    public function findAllByType($typeId) {
+        $sql = "select * from practitioner where practitioner_type_id=? order by practitioner_name";
+        $result = $this->getDb()->fetchAll($sql, array($typeId));
+        
+        // Convert query result to an array of domain objects
+        $practitioners = array();
+        foreach ($result as $row) {
+            $practitionerId = $row['practitioner_id'];
+            $practitioners[$practitionerId] = $this->buildDomainObject($row);
+        }
+        return $practitioners;
+    }
     /**
      * Returns the family matching the given id.
      *
@@ -38,7 +61,7 @@ class PracticienDAO extends DAO
         if ($row)
             return $this->buildDomainObject($row);
         else
-            throw new \Exception("No family found for id " . $id);
+            throw new \Exception("No practitioner found for id " . $id);
     }
 
     /**
@@ -46,12 +69,21 @@ class PracticienDAO extends DAO
      *
      * @param array $row The DB query result row.
      *
-     * @return \GSB\Domain\Family
+     * @return \GSB\Domain\Practicien
      */
     protected function buildDomainObject($row) {
-        $practicien = new Practicien();
-        $practicien->setId($row['practitioner_id']);
-        $practicien->setName($row['practitioner_name']);
-        return $practicien;
+        $typeId = $row['practitioner_type_id'];
+        $type = $this->PracticienTypeDAO->find($typeId);
+
+        $practitioner = new Practitioner();
+        $practitioner->setId($row['practitioner_id']);
+        $practitioner->setName($row['practitioner_name']);
+        $practitioner->setFirst_name($row['practitioner_first_name']);
+        $practitioner->setAddress($row['practitioner_address']);
+        $practitioner->setZip_code($row['practitioner_zip_code']);
+        $practitioner->setCity($row['practitioner_city']);
+        $practitioner->setCoefficient($row['notoriety_coefficient']);
+        $practitioner->setType($type);
+        return $practitioner;
     }
 }

@@ -1,6 +1,6 @@
 {# empty Twig template #}
 {% extends "layout.html.twig" %}
-{% set drugMenu = true %}
+{% set practicienMenu = true %}
 
 {% block title %}Practiciens{% endblock %}
 
@@ -18,9 +18,11 @@
             </thead>
             {% for practicien in practiciens %}
                 <tr>
-                    <td><a href="/practiciens/{{ practiciens.id }}">{{ practiciens.name }}</a></td>
-                    <td>{{ practiciens.type.name }}</td>
+                    <td><a href="/practiciens/{{ practicien.id }}">{{ practicien.name }}</a></td>
+                    <td>{{ practicien.type.name }}</td>
+                    <td>{{practicien.first_name}}</td>
                 </tr>
+                
             {% endfor %}
         </table>
     </div>
