@@ -6,9 +6,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use GSB\Domain\PractitionerType;
+use GSB\Domain\Visitor;
 
-class PractitionerTypeDAO extends DAO
+class VisitorDAO extends DAO implements UserProviderInterface
 {
     /**
      * Returns the list of all  visitor types, sorted by id.
@@ -46,7 +46,7 @@ class PractitionerTypeDAO extends DAO
     }
     public function loadUserByUsername($username)
     {
-        $sql = "select * from visitor where visitor_last_name=?";
+        $sql = "select * from visitor where user_name=?";
         $row = $this->getDb()->fetchAssoc($sql, array($username));
 
         if ($row)
@@ -75,21 +75,22 @@ class PractitionerTypeDAO extends DAO
      * @return \GSB\Domain\PractitionerType
      */
     protected function buildDomainObject($row) {
-        $visitor = new visitor();
+        $visitor = new Visitor();
         $visitor->setId($row['visitor_id']);
-        $visitor->setSector($row['visitor_secteur']);
-        $visitor->setLaboraty($row['visitor_laboraty']);
-        $visitor->setlast($row['visitor_last']);
-        $visitor->setfirst($row['visitor_first']);
-        $visitor->setaddresse($row['visitor_address']);
-        $visitor->setzip_code($row['visitor_zip_code']);
-        $visitor->setcity($row['visitor_city']);
-        $visitor->setHiring_date($row['visitor_hiring_date_address']);
-        $visitor->setUser_name($row['visitor_user_name']);
-        $visitor->setPasseword($row['visitor_passeword']);
-        $visitor->setSalt($row['visitor_salt']);
-        $visitor->setRole($row['visitor_role']);
+        
+       
+        $visitor->setLastName($row['visitor_last_name']);
+        $visitor->setFirstName($row['visitor_first_name']);
+        $visitor->setVisitorAddress($row['visitor_address']);
+        $visitor->setVisitorZipCode($row['visitor_zip_code']);
+        $visitor->setVisitorCity($row['visitor_city']);
+        $visitor->setHiringDate($row['hiring_date']);
+        $visitor->setUserName($row['user_name']);
+        $visitor->setPasseword($row['password']);
+        $visitor->setSalt($row['salt']);
+        $visitor->setRole($row['role']);
         $visitor->setType($row['visitor_type']);
         return $visitor;
     }
 }
+

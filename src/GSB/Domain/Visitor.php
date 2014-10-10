@@ -1,8 +1,9 @@
 <?php
 
 namespace GSB\Domain;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class Visitor 
+class Visitor implements UserInterface
 {
     
     private $id;
@@ -13,17 +14,17 @@ class Visitor
 
     private $last_name;
 
-    private $first_name;
+    private $firstName;
 
-    private $visitor_addresse;
+    private $visitorAddress;
 
-    private $visitor_zip_code;
+    private $visitorZipCode;
 
-    private $visitor_city;
+    private $visitorCity;
     
-    private $hiring_date;
+    private $hiringDate;
     
-    private $user_name;
+    private $userName;
     
     private $passeword;
     
@@ -33,62 +34,49 @@ class Visitor
     
     private $type;
 
+    
+
     public function getId() {
         return $this->id;
-    }
-    public function setId($id) {
-        $this->id = $id;
     }
 
     public function getSector() {
         return $this->sector;
     }
 
-    public function setSector($sector) {
-        $this->sector = $sector;
-    }
-
     public function getLaboraty() {
         return $this->laboraty;
-    }
-
-    public function setLaboraty($laboraty) {
-        $this->laboraty = $laboraty;
     }
 
     public function getLastName() {
         return $this->last_name;
     }
 
-    public function setlast($first) {
-        $this->last = $first;
+    public function getFirstName() {
+        return $this->firstName;
     }
-    public function getfirst() {
+    public function getFirst() {
         return $this->first;
     }
 
-    public function setfirst($first) {
-        $this->first = $first;
-    }
-    
-    public function getaddresse() {
-        return $this->visitor_addresse;
+    public function getVisitorAddresse() {
+        return $this->visitorAddresse;
     }
 
-    public function getzip_code() {
-        return $this->visitor_zip_code;
+    public function getVisitorZipCode() {
+        return $this->visitorZipCode;
     }
 
-    public function getcity() {
-        return $this->visitor_city;
+    public function getVisitorCity() {
+        return $this->visitorCity;
     }
 
-    public function getHiring_date() {
-        return $this->hiring_date;
+    public function getHiringDate() {
+        return $this->hiringDate;
     }
 
-    public function getUser_name() {
-        return $this->user_name;
+    public function getUserName() {
+        return $this->userName;
     }
 
     public function getPasseword() {
@@ -107,24 +95,44 @@ class Visitor
         return $this->type;
     }
 
-    public function setaddresse($addresse) {
-        $this->addresse = $addresse;
+    public function setId($id) {
+        $this->id = $id;
     }
 
-    public function setzip_code($zip_code) {
-        $this->zip_code = $zip_code;
+    public function setSector($sector) {
+        $this->sector = $sector;
     }
 
-    public function setcity($city) {
-        $this->city = $city;
+    public function setLaboraty($laboraty) {
+        $this->laboraty = $laboraty;
     }
 
-    public function setHiring_date($hiring_date) {
-        $this->date = $hiring_date;
+    public function setLastName($lastName) {
+        $this->lastName = $lastName;
     }
 
-    public function setUser_name($user_name) {
-        $this->name = $user_name;
+    public function setFirstName($firstName) {
+        $this->firstName = $firstName;
+    }
+
+    public function setVisitorAddress($visitorAddress) {
+        $this->visitorAddress = $visitorAddress;
+    }
+
+    public function setVisitorZipCode($visitorZipCode) {
+        $this->visitorZipCode = $visitorZipCode;
+    }
+
+    public function setVisitorCity($visitorCity) {
+        $this->visitorCity = $visitorCity;
+    }
+
+    public function setHiringDate($hiringDate) {
+        $this->hiringDate = $hiringDate;
+    }
+
+    public function setUserName($userName) {
+        $this->userName = $userName;
     }
 
     public function setPasseword($passeword) {
@@ -141,6 +149,18 @@ class Visitor
 
     public function setType($type) {
         $this->type = $type;
+    }
+    
+    public function getRoles()
+    {
+        return array($this->getRole());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials() {
+        // Nothing to do here
     }
 
 
