@@ -11,9 +11,9 @@ class Visitor
 
     private $laboraty;
 
-    private $visitor_last;
+    private $last_name;
 
-    private $visitor_first;
+    private $first_name;
 
     private $visitor_addresse;
 
@@ -31,7 +31,7 @@ class Visitor
     
     private $role;
     
-    private $visitor_type;
+    private $type;
 
     public function getId() {
         return $this->id;
@@ -56,8 +56,8 @@ class Visitor
         $this->laboraty = $laboraty;
     }
 
-    public function getlast() {
-        return $this->last;
+    public function getLastName() {
+        return $this->last_name;
     }
 
     public function setlast($first) {
