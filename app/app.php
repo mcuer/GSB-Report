@@ -29,7 +29,9 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         ),
     ),
 ));
-            
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
+
 // Register services.
 $app['dao.family'] = $app->share(function ($app) {
     return new GSB\DAO\FamilyDAO($app['db']);
@@ -48,5 +50,5 @@ $app['dao.practitioner'] = $app->share(function ($app) {
     return $practitionerDAO;
 });
 $app['dao.visitor'] = $app->share(function ($app) {
-    return new GSB-Report\DAO\VisitorDao($app['db']);
+    return new GSB\DAO\VisitorDAO($app['db']);
 });

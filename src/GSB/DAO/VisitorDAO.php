@@ -1,6 +1,7 @@
 <?php
 
 namespace GSB\DAO;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -10,29 +11,11 @@ use GSB\Domain\Visitor;
 class VisitorDAO extends DAO implements UserProviderInterface
 {
     /**
-     * Returns the list of all  visitor types, sorted by id.
-     *
-     * 
-     */
-    public function findAll() {
-        $sql = "select * from visitor order by visitor_id";
-        $result = $this->getDb()->fetchAll($sql);
-        
-        // Converts query result to an array of domain objects
-        $visitor = array();
-        foreach ($result as $row) {
-            $visitor = $row['visitor_id'];
-            $visitor[$visitor] = $this->buildDomainObject($row);
-        }
-        return $visitor;
-    }
-
-    /**
-     * Returns the visitor matching the given id.
+     * Returns a visitor matching the supplied id.
      *
      * @param integer $id
      *
-     * @return \GSB\Domain\visitorDAO |throws an exception if no PractitionerType is found.
+     * @return \GSB\Domain\Visitor|throws an exception if no matching user is found
      */
     public function find($id) {
         $sql = "select * from visitor where visitor_id=?";
@@ -41,8 +24,42 @@ class VisitorDAO extends DAO implements UserProviderInterface
         if ($row)
             return $this->buildDomainObject($row);
         else
-            throw new \Exception("No visitor found for id " . $id);
+            throw new \Exception("No visitor matching id " . $id);
     }
+
+    /**
+     * Saves a visitor into the database.
+     *
+     * @param \GSB\Domain\Visitor $visitor The visitor to save
+     */
+    public function save($visitor) {
+        $hiringDateString = $visitor->getHiringDate()->format('Y-m-d');
+        $visitorData = array(
+            'visitor_last_name' => $visitor->getLastName(),
+            'visitor_first_name' => $visitor->getFirstName(),
+            'visitor_address' => $visitor->getAddress(),
+            'visitor_zip_code' => $visitor->getZipCode(),
+            'visitor_city' => $visitor->getCity(),
+            'hiring_date' => $hiringDateString,
+            'user_name' => $visitor->getUsername(),
+            'password' => $visitor->getPassword(),
+            );
+
+        if ($visitor->getId()) {
+            // The visitor has already been saved : update it
+            $this->getDb()->update('visitor', $visitorData, array('visitor_id' => $visitor->getId()));
+        } else {
+            // The visitor has never been saved : insert it
+            $this->getDb()->insert('visitor', $visitorData);
+            // Get the id of the newly created visitor and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $visitor->setId($id);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function loadUserByUsername($username)
     {
         $sql = "select * from visitor where user_name=?";
@@ -51,7 +68,7 @@ class VisitorDAO extends DAO implements UserProviderInterface
         if ($row)
             return $this->buildDomainObject($row);
         else
-            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
+            throw new UsernameNotFoundException(sprintf('Visitor "%s" not found.', $username));
     }
 
     /**
@@ -65,31 +82,36 @@ class VisitorDAO extends DAO implements UserProviderInterface
         }
         return $this->loadUserByUsername($user->getUsername());
     }
-     public function supportsClass($class)
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supportsClass($class)
     {
         return 'GSB\Domain\Visitor' === $class;
     }
+
     /**
-     * Creates a visitor instance from a DB query result row.
+     * Creates a Visitor object based on a DB row.
      *
-     * @param array $row The DB query result row.
-     *
-     * @return \GSB\Domain\PractitionerType
+     * @param array $row The DB row containing Visitor data.
+     * @return \GSB\Domain\Visitor
      */
     protected function buildDomainObject($row) {
-        $visitor = new visitor();
+        $visitor = new Visitor();
         $visitor->setId($row['visitor_id']);
-        $visitor->setVisitorLast($row['visitor_last_name']);
-        $visitor->setVisitorFirst($row['visitor_first_name']);
-        $visitor->setVisitorAddresse($row['visitor_address']);
-        $visitor->setVisitorZipCode($row['visitor_zip_code']);
-        $visitor->setVisitorCity($row['visitor_city']);
-        $visitor->setHiringDate($row['hiring_date']);
-        $visitor->setUserName($row['user_name']);
-        $visitor->setPasseword($row['password']);
+        $visitor->setLastName($row['visitor_last_name']);
+        $visitor->setFirstName($row['visitor_first_name']);
+        $visitor->setAddress($row['visitor_address']);
+        $visitor->setZipCode($row['visitor_zip_code']);
+        $visitor->setCity($row['visitor_city']);
+        // Transform the DB date into a DateTime object
+        $hiringDate = \DateTime::createFromFormat('Y-m-d', $row['hiring_date']);
+        $visitor->setHiringDate($hiringDate);
+        $visitor->setUsername($row['user_name']);
+        $visitor->setPassword($row['password']);
         $visitor->setSalt($row['salt']);
         $visitor->setRole($row['role']);
-        $visitor->setType($row['visitor_type']);
         return $visitor;
     }
 }
