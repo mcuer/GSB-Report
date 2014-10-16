@@ -1,7 +1,7 @@
 <?php
 namespace GSB\Domain;
 use Symfony\Component\Security\Core\User\UserInterface;
-    class Visitor implements UserInterface
+class Visitor implements UserInterface
 {
     /**
     * Visitor id.

@@ -38,7 +38,17 @@ $app->get('/practitioners/{id}', function($id) use ($app) {
     $practitioner = $app['dao.practitioner']->find($id);
     return $app['twig']->render('practitioner.html.twig', array('practitioner' => $practitioner));
 });
+// List of all report
+$app->get('/report/', function() use ($app) {
+    $report = $app['dao.report']->findAll();
+    return $app['twig']->render('report.html.twig', array('report' => $report));
+});
 
+// Ajout form for report
+$app->get('/report/add/', function() use ($app) {
+    $ajout = $app['dao.ajout']->findAll();
+    return $app['twig']->render('report_add.html.twig', array('ajout' => $ajout));
+});
 // List of all practitioners
 $app->get('/practitioners/', function() use ($app) {
     $practitioners = $app['dao.practitioner']->findAll();
