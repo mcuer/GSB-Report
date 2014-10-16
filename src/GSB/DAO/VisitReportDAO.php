@@ -7,10 +7,12 @@ use GSB\Domain\VisitReport;
 class VisitReportDAO extends DAO
 {
     protected $practitionerDAO;
+    
     public function setPractitionerDAO($practitionerDAO) {
         $this->practitionerDAO = $practitionerDAO;
     }
     protected $visitorDAO;
+    
     public function setVisitorDAO($visitorDAO) {
         $this->visitorDAO = $visitorDAO;
     }
